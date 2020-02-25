@@ -19,12 +19,41 @@ import {withStyles} from '@material-ui/core/styles';
 import LockOutlinedIcon from '@material-ui/icons/LockOutlined'
 import styles from '../Styles/FormStyles';
 
+import {LanguageContext} from '../LanguageContext';
+
+const selectedLanguage = {
+    french: {
+        email: "adresse électronique",
+        password: "mot de passe",
+        remember: "rappelles toi",
+        signIn: "se connecter"
+    },
+    spanish: {
+        email: "correo electronico",
+        password: "contrasena",
+        remember: "recuerda",
+        signIn: "registrarse"
+    },
+    english: {
+        email: "email",
+        password: "password",
+        remember: "remember",
+        signIn: "sign in"
+    }
+};
 
 class Form extends Component {
 
+    static contextType = LanguageContext;
+
     render () {
 
+        
         const {classes} = this.props;
+
+        const {language} = this.context;
+
+        const {email, password, remember, signIn} = selectedLanguage[language];
 
         return (
             <main className = {classes.main}>
@@ -34,7 +63,7 @@ class Form extends Component {
                     </Avatar>
 
                     <Typography variant="h5">
-                        Sign In
+                        {signIn}
                     </Typography>
 
                     <Select value="English">
@@ -47,7 +76,7 @@ class Form extends Component {
                                      required 
                                      fullWidth>
                             <InputLabel htmlFor="email">
-                                Email
+                                {email}
                             </InputLabel>
                             <Input 
                                 id="email" 
@@ -60,7 +89,7 @@ class Form extends Component {
                             required 
                             fullWidth>
                             <InputLabel htmlFor="password">
-                                Password
+                                {password}
                             </InputLabel>
                             <Input 
                                 id="password" 
@@ -69,7 +98,7 @@ class Form extends Component {
                         </FormControl>
 
                         <FormControlLabel 
-                            label="Remember Me" 
+                            label={remember} 
                             control={<Checkbox color="primary"/>}/>
 
                         <Button 
@@ -78,7 +107,7 @@ class Form extends Component {
                             fullWidth 
                             color="primary" 
                             className={classes.submit}> 
-                            Sign In 
+                            {signIn}
                         </Button>
                     </form>
                 </Paper>
