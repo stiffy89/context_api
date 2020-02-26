@@ -1,24 +1,16 @@
-import React, {useContext, Component, createContext} from 'react';
+import React, {createContext, useState} from 'react';
 
 export const LanguageContext = createContext();
 
-export class LanguageProvider extends Component {
+export function LanguageProvider (props) {
 
-    constructor (props) {
-        super(props);
+    const[language, setLanguage] = useState("spanish");
 
-        this.state = {
+    const changeLanguage = (event) => setLanguage(event.target.value);
 
-            language : "spanish"
-
-        };
-    }
-
-    render () {
-        return (
-            <LanguageContext.Provider value = {this.state}>
-                {this.props.children}
-            </LanguageContext.Provider>
-        )
-    }
+    return (
+        <LanguageContext.Provider value = {{language: language, setLanguage: changeLanguage}}>
+            {props.children}
+        </LanguageContext.Provider>
+    );
 }

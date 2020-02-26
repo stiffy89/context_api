@@ -1,4 +1,4 @@
-import React, {Component} from 'react';
+import React, {useContext} from 'react';
 
 import {
     Avatar,
@@ -42,21 +42,16 @@ const selectedLanguage = {
     }
 };
 
-class Form extends Component {
+function Form (props) 
+{
+    const {language, setLanguage} = useContext(LanguageContext);
+    
+    const {classes} = props;
 
-    static contextType = LanguageContext;
+    const {email, password, remember, signIn} = selectedLanguage[language];
 
-    render () {
-
-        
-        const {classes} = this.props;
-
-        const {language} = this.context;
-
-        const {email, password, remember, signIn} = selectedLanguage[language];
-
-        return (
-            <main className = {classes.main}>
+    return (
+        <main className = {classes.main}>
                 <Paper className = {classes.paper}>
                     <Avatar className = {classes.avatar}>
                         <LockOutlinedIcon/>
@@ -66,10 +61,10 @@ class Form extends Component {
                         {signIn}
                     </Typography>
 
-                    <Select value="English">
-                        <MenuItem value="English"> English </MenuItem>
-                        <MenuItem value="French"> French </MenuItem>
-                        <MenuItem value="Spanish"> Spanish </MenuItem>
+                    <Select value={language} onChange={setLanguage}>
+                        <MenuItem value="english"> English </MenuItem>
+                        <MenuItem value="french"> French </MenuItem>
+                        <MenuItem value="spanish"> Spanish </MenuItem>
                     </Select>
                     <form className= {classes.form}>
                         <FormControl margin="normal" 
@@ -112,8 +107,8 @@ class Form extends Component {
                     </form>
                 </Paper>
             </main>
-        )
-    }
+    )
 }
+
 
 export default withStyles(styles)(Form);
